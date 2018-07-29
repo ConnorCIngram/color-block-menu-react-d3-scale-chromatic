@@ -12,13 +12,16 @@
 }
 .App-upper,
 .App-lower {
-  color: #4c3549;
+  color: white;
   place-self: center;
+  padding: 1rem;
 }
 .App-upper-sub {
   font-size: 1rem;
 }
 .App-lower {
+  padding: 1rem;
+  font-size: 1rem;
   align-self: end;
   justify-self: left;
   margin-bottom: 0;

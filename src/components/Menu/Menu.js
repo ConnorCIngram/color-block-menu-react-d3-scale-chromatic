@@ -1,30 +1,38 @@
 import React, { Component } from "react";
 import "./Menu.css";
 
+import MenuBlock from "../MenuBlock/MenuBlock";
+
 var d3ScaleChromatic = require("d3-scale-chromatic");
-var colorSchemes = [
-  {
-    scheme: convertToStepScheme(d3ScaleChromatic.interpolateBlues, 6, [0, 1]),
-    name: "interpolateBlues"
-  },
-  { scheme: d3ScaleChromatic.schemeCategory10, name: "schemeCategory10" },
-  { scheme: d3ScaleChromatic.schemeAccent, name: "d3.schemeAccent" },
-  { scheme: d3ScaleChromatic.schemeDark2, name: "d3.schemeDark2" },
-  { scheme: d3ScaleChromatic.schemePaired, name: "d3.schemePaired" },
-  { scheme: d3ScaleChromatic.schemePastel1, name: "d3.schemePastel1" },
-  { scheme: d3ScaleChromatic.schemePastel2, name: "d3.schemePastel2" },
-  { scheme: d3ScaleChromatic.schemeSet1, name: "d3.schemeSet1" },
-  { scheme: d3ScaleChromatic.schemeSet2, name: "d3.schemeSet2" },
-  { scheme: d3ScaleChromatic.schemeSet3, name: "d3.schemeSet3" }
-];
+
+let colorSchemes = [];
+for (let d in d3ScaleChromatic) {
+  if (typeof d3ScaleChromatic[d] == "function") {
+    // interpolated scheme
+    colorSchemes.push({
+      name: d,
+      scheme: convertToStepScheme(d3ScaleChromatic[d], 10)
+    });
+  } else {
+    // scheme
+    if (d3ScaleChromatic[d][0]) {
+      // ignore discrete schemes because they're coverted by their interolation
+      colorSchemes.push({
+        name: d,
+        scheme: d3ScaleChromatic[d]
+      });
+    }
+  }
+}
+console.log(colorSchemes);
 
 /**
  * Returns an array of color steps through a d3-scale-chromatic continous interpolator.
  *
  *
  * @param {d3.interpolator} scheme  The d3 continuous interpolator
- * @param {int} steps               Indicates how many colors you want to return
- * @param {Array, len 2} [splice]   Optional variable, takes a subsection of [0,1] (ex: [0.8,1])
+ * @param {number} steps               Indicates how many colors you want to return
+ * @param {array, len 2} [splice]   Optional variable, takes a subsection of [0,1] (ex: [0.8,1])
  */
 function convertToStepScheme(scheme, steps, splice) {
   let step = 1 / steps;
@@ -55,20 +63,75 @@ function convertToStepScheme(scheme, steps, splice) {
   return a;
 }
 
+// media query breakpoints
+const breakpoints = {
+  mobileS: { min: 0, max: 600, maxCols: 1 },
+  mobile: { min: 600, max: 900, maxCols: 2 },
+  tablet: { min: 900, max: 1200, maxCols: 4 },
+  computer: { min: 1200, max: 1800, maxCols: 10 },
+  computerL: { min: 1800, max: Infinity, maxCols: 20 }
+};
+
 class Menu extends Component {
   constructor(props) {
     super(props);
-    this.state = { schemeIdx: 0, scheme: colorSchemes[0] };
+
+    // initialize max columns for current device
+
+    this.state = {
+      schemeIdx: 0,
+      scheme: colorSchemes[0],
+      maxCols: null,
+      device: null
+    };
     this.handleSchemeChange = this.handleSchemeChange.bind(this);
   }
 
   handleSchemeChange() {
-    let idx = this.state.schemeIdx;
-    idx = idx < colorSchemes.length - 1 ? idx : 0;
+    this.setState(
+      // first increment the scheme index by 1, or reset if end of color schemes
+      {
+        schemeIdx:
+          this.state.schemeIdx < colorSchemes.length - 1
+            ? this.state.schemeIdx + 1
+            : 0
+      },
+      () => {
+        // on the callback, update the actual state color scheme
+        this.setState({ scheme: colorSchemes[this.state.schemeIdx] });
+      }
+    );
+  }
 
-    this.setState({ schemeIdx: idx + 1 }, () => {
-      this.setState({ scheme: colorSchemes[this.state.schemeIdx] });
-    });
+  componentDidMount() {
+    // once the component mounts, listen for and handle window sizes
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
+  }
+
+  resize() {
+    let width = parseInt(window.innerWidth),
+      device;
+
+    // find breakpoints
+    for (let key in breakpoints) {
+      if (breakpoints.hasOwnProperty(key)) {
+        if (breakpoints[key].min <= width && width <= breakpoints[key].max) {
+          device = key;
+          break;
+        }
+      }
+    }
+
+    // only change state if the device width has changed
+    if (this.state.device !== device) {
+      this.setState(() => {
+        return {
+          device: device,
+          maxCols: breakpoints[device].maxCols
+        };
+      });
+    }
   }
 
   render() {
@@ -78,39 +141,21 @@ class Menu extends Component {
         <div
           className="Menu-wrapper"
           style={{
-            gridTemplateColumns: "repeat(" + this.state.scheme.length + ", 1fr)"
+            gridTemplateColumns:
+              "repeat(" +
+              Math.min(this.state.scheme.scheme.length, this.state.maxCols) +
+              ",1fr)"
           }}
         >
           {this.state.scheme.scheme.map(color => {
-            return (
-              // let idx = this.state.scheme.indexOf(color);
-              <div key={color.substr(1)} className="Menu-block">
-                <div
-                  className="Menu-block-upper"
-                  style={{ backgroundColor: color }}
-                  href="/"
-                  onMouseEnter={e => {
-                    e.target.style.backgroundColor = "black";
-                    e.target.style.color = color;
-                  }}
-                  onMouseLeave={e => {
-                    e.target.style.backgroundColor = color;
-                    e.target.style.color = "black";
-                  }}
-                >
-                  {color.toUpperCase()}
-                </div>
-                <div
-                  className="Menu-block-lower"
-                  style={{ backgroundColor: color }}
-                />
-              </div>
-            );
+            return <MenuBlock color={color} key={color.substr(1)} />;
           })}
         </div>
-        <button onClick={this.handleSchemeChange} className="button change">
-          Change Color Scheme
-        </button>
+        <div className="Menu-lower">
+          <button onClick={this.handleSchemeChange} className="button change">
+            Change Color Scheme
+          </button>
+        </div>
       </div>
     );
   }

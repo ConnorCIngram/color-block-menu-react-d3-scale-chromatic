@@ -2,41 +2,31 @@
   grid-row: 2/3;
   background-color: #212121;
   display: grid;
-  grid-template-rows: 1fr 10fr 1fr;
+  grid-template-rows: auto 10fr auto;
 }
 .Menu-upper {
   place-self: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 1rem;
 }
 .Menu-wrapper {
   grid-row: 2;
   display: grid;
-  grid-template-rows: auto;
   height: 100%;
   width: 100%;
   right: 0;
   left: 0;
 }
-.Menu-block {
-  grid-row: 1;
-  display: grid;
-  grid-template-rows: auto 2px;
+.Menu-lower {
+  place-self: center;
+  padding-top: 1rem;
 }
 
-.Menu-block-upper {
-  /* height: 100%; */
-  grid-row: 1;
-  padding: 1rem;
-  text-align: left;
-  font-weight: bold;
-  color: black;
-}
-.Menu-block-lower {
-  grid-row: 2;
-}
 button.change {
   width: 200px;
   grid-column: 1;
-  place-self: center;
+
   grid-row: 3;
 
   background-color: transparent;

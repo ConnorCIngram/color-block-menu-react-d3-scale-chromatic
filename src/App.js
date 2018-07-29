@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import "./App.css";
 import Menu from "./components/Menu/Menu";
 
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fab);
+
 class App extends Component {
   render() {
     return (
@@ -9,12 +15,15 @@ class App extends Component {
         <h1 className="App-upper">
           Colored Block Menu Using{" "}
           <a href="https://github.com/d3/d3-scale-chromatic">
-            d3-scale-chromatic
+            d3-scale-chromatic <FontAwesomeIcon icon={["fab", "github"]} />
           </a>
-          <p className="App-upper-sub">Not Currently Mobile Friendly</p>
         </h1>
         <Menu />
-        <h5 className="App-lower">2018 Connor Ingram</h5>
+        <h5 className="App-lower">
+          <a href="https://github.com/ConnorCIngram">
+            <FontAwesomeIcon icon={["fab", "github"]} /> 2018 Connor Ingram
+          </a>
+        </h5>
       </div>
     );
   }
