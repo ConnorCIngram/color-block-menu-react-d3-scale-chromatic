@@ -13,22 +13,27 @@ class MenuBlock extends Component {
           onMouseEnter={e => {
             e.target.style.backgroundColor = "#212121";
             e.target.style.color = this.props.color;
-
-            // e.target.parentNode.style.gridTemplateRows = "auto 30px";
+            e.target.parentNode.children[1].style.transform = "translateY(0px)";
           }}
           onMouseLeave={e => {
             e.target.style.backgroundColor = this.props.color;
             e.target.style.color = "black";
 
-            // e.target.parentNode.style.gridTemplateRows = "auto 2px";
+            e.target.parentNode.children[1].style.transform =
+              "translateY(1rem)";
           }}
           onTouchStart={e => {
             e.target.style.backgroundColor = "#212121";
             e.target.style.color = this.props.color;
+
+            e.target.parentNode.children[1].style.transform = "translateY(0px)";
           }}
           onTouchEnd={e => {
             e.target.style.backgroundColor = this.props.color;
             e.target.style.color = "#212121";
+
+            e.target.parentNode.children[1].style.transform =
+              "translateY(1rem)";
           }}
         >
           {this.props.color.toUpperCase()}

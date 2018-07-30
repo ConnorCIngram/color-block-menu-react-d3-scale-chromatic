@@ -14,7 +14,7 @@ class App extends Component {
       <div className="App">
         <h1 className="App-upper">
           Colored Block Menu Using{" "}
-          <a href="https://github.com/d3/d3-scale-chromatic">
+          <a href="https://github.com/d3/d3-scale-chromatic" target="_blank">
             d3-scale-chromatic <FontAwesomeIcon icon={["fab", "github"]} />
           </a>
         </h1>

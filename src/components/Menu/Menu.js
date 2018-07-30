@@ -7,7 +7,7 @@ var d3ScaleChromatic = require("d3-scale-chromatic");
 
 let colorSchemes = [];
 for (let d in d3ScaleChromatic) {
-  if (typeof d3ScaleChromatic[d] == "function") {
+  if (typeof d3ScaleChromatic[d] === "function") {
     // interpolated scheme
     colorSchemes.push({
       name: d,

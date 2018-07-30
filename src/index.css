@@ -4,6 +4,12 @@ body {
   font-family: sans-serif;
   background-color: #212121;
 }
+::selection {
+  background: #00a7af; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #00a7af; /* Gecko Browsers */
+}
 
 a {
   color: white;
