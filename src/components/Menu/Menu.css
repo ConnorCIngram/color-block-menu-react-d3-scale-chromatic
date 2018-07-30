@@ -23,10 +23,9 @@
   padding-top: 1rem;
 }
 
-button.change {
-  width: 200px;
+button {
   grid-column: 1;
-
+  min-width: 60px;
   grid-row: 3;
 
   background-color: transparent;
@@ -43,9 +42,31 @@ button.change {
 
   border: 2px solid #494949;
 }
-button.change:hover {
+button:hover {
   background-color: #494949;
+  cursor: pointer;
 }
-button.change:focus {
+button:focus {
   outline: 0;
+}
+.Menu-select {
+  display: inline;
+  padding: 1rem;
+}
+select#Menu-select {
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+select#Menu-select:focus {
+  outline: none;
+}
+.Menu-lower-splice {
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  position: relative;
+  bottom: 0;
+  min-width: 50%;
+}
+.Menu-lower-splice.inputs {
+  margin-bottom: 0;
 }

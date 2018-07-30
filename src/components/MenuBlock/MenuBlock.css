@@ -6,10 +6,26 @@
   overflow: hidden;
   position: relative;
 }
+.Menu-block-upper-bar {
+  /* make this 0 if you don't want the top bar on the blocks */
+  height: 0;
+}
 .Menu-block-upper {
   height: 100%;
-  /* transition: 0.5s; */
+  min-height: 100px;
+  font-weight: bold;
+  text-align: left;
+  padding: 0.5rem;
 }
+
+.Menu-block-upper:hover {
+  background-color: #212121 !important;
+  cursor: pointer;
+}
+.Menu-block-upper:hover + .Menu-block-lower {
+  transform: translateY(0);
+}
+
 .Menu-block-lower {
   height: 1rem;
   transition: 0.3s;

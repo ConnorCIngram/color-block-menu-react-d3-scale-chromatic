@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+/* Using css grid */
 .App {
   text-align: center;
   display: grid;
@@ -21,7 +23,7 @@
 }
 .App-lower {
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 2rem;
   align-self: end;
   justify-self: left;
   margin-bottom: 0;
