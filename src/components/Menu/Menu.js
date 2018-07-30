@@ -150,6 +150,15 @@ class Menu extends Component {
     if (!end) end = 1;
     if (!steps) steps = 10;
 
+    if (start > 1 || start < 0) {
+      alert("Values must be between 0 and 1.");
+      return;
+    } else if (end > 1 || end < 0) {
+      alert("Values must be between 0 and 1.");
+
+      return;
+    }
+
     // validate
     if (end >= start && steps > 0 && steps < 10000) {
       let idx = colorSchemes.indexOf(this.state.scheme);
