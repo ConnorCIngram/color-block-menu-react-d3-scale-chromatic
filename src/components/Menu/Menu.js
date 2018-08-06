@@ -31,7 +31,6 @@ for (let d in d3ScaleChromatic) {
     }
   }
 }
-colorSchemes.push({ name: "asdf", scheme: ["red"] });
 // you can add custom schemes by pushing to colorSchemes
 // ex:
 // colorSchemes.push({
