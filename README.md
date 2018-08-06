@@ -26,7 +26,7 @@ to start the react server.
 
 - [React](https://reactjs.org/)
 - [d3-scale-chromatic](https://github.com/d3/d3-scale-chromatic) - Used to generate color schemes
-- [create-react-app](https://github.com/facebook/create-react-app) - Used to quickly get and environment started.
+- [create-react-app](https://github.com/facebook/create-react-app) - Used to quickly get an environment started.
 
 ## Contributing
 
