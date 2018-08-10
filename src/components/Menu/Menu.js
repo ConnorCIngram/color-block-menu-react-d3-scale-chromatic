@@ -135,9 +135,12 @@ class Menu extends Component {
   }
 
   handleSelectChange(e) {
-    this.setState({
-      scheme: colorSchemes.filter(scheme => scheme.name === e.target.value)[0]
-    });
+    this.setState(
+      {
+        scheme: colorSchemes.filter(scheme => scheme.name === e.target.value)[0]
+      },
+      () => console.log(this.state.scheme)
+    );
   }
 
   handleSpliceChange(e) {
